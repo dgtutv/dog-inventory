@@ -9,7 +9,8 @@
   "scripts": {
     "test": "node test-database.js",
     "seed": "node db/populatedb.js",
-    "test-db": "node test-database.js"
+    "test-db": "node test-database.js",
+    "test-cascade": "node test-cascade.js"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
