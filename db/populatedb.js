@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const fs = require('fs');
 const { Client } = require("pg");
+require('dotenv').config();
 const { USERNAME, PASSWORD, DBNAME } = process.env;
 const SQL = fs.readFileSync(`${__dirname}/seed.sql`, 'utf8');
 
