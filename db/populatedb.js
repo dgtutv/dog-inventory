@@ -5,7 +5,7 @@ const { USERNAME, PASSWORD, DBNAME } = process.env;
 const SQL = fs.readFileSync(`${__dirname}/seed.sql`, 'utf8');
 
 async function main() {
-  console.log("seeding...");
+  console.log("creating...");
   const client = new Client({
     connectionString: `postgresql://${USERNAME}:${PASSWORD}@localhost:5432/${DBNAME}`
   });
