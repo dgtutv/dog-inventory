@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS "stylist" CASCADE;
 CREATE TABLE "dog"(
     "id" BIGSERIAL PRIMARY KEY,
     "breed" BIGINT NOT NULL,
-    "preferredStylist" BIGINT NOT NULL
+    "preferredStylist" BIGINT NULL  -- Allow NULL when stylist is deleted
 );
 
 CREATE TABLE "breed"(
@@ -47,21 +47,30 @@ CREATE TABLE "stylist"(
 -- =======================================
 -- FOREIGN KEY CONSTRAINTS
 -- =======================================
+
+-- If a stylist is deleted, set dogs' preferredStylist to NULL
 ALTER TABLE "dog"
     ADD CONSTRAINT "dog_preferredstylist_foreign"
-    FOREIGN KEY("preferredStylist") REFERENCES "stylist"("employeeId");
+    FOREIGN KEY("preferredStylist") REFERENCES "stylist"("employeeId")
+    ON DELETE SET NULL;
 
+-- If a dog is deleted, delete all its haircuts (CASCADE)
 ALTER TABLE "haircut"
     ADD CONSTRAINT "haircut_dog_foreign"
-    FOREIGN KEY("dog") REFERENCES "dog"("id");
+    FOREIGN KEY("dog") REFERENCES "dog"("id")
+    ON DELETE CASCADE;
 
+-- If a breed is deleted, prevent deletion if dogs reference it (RESTRICT - default behavior)
 ALTER TABLE "dog"
     ADD CONSTRAINT "dog_breed_foreign"
-    FOREIGN KEY("breed") REFERENCES "breed"("id");
+    FOREIGN KEY("breed") REFERENCES "breed"("id")
+    ON DELETE RESTRICT;
 
+-- If a dog is deleted, delete the owner record that references it (CASCADE)
 ALTER TABLE "owner"
     ADD CONSTRAINT "owner_dogs_foreign"
-    FOREIGN KEY("dogs") REFERENCES "dog"("id");
+    FOREIGN KEY("dogs") REFERENCES "dog"("id")
+    ON DELETE CASCADE;
 
 -- =======================================
 -- SEED DATA
