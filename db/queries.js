@@ -5,6 +5,16 @@ const pool = require("./pool");
 //POST: writeID
 //DELETEL removeID
 
+//dog table
+
+//haircut table
+
+//stylist table
+
+//owner table
+
+//breed table
+
 async function getAllUsernames() {
     const { rows } = await pool.query("SELECT * FROM usernames");
     return rows;
