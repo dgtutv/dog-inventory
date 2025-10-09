@@ -17,7 +17,7 @@ async function getDog(id) {
 }
 
 async function editDog(id, breed, preferredStylist) {
-    const result = await pool.query("UPDATE dog SET breed=($1), preferredStylist=($2) WHERE id=($3)", [breed, preferredStylist, id]);
+    const result = await pool.query('UPDATE dog SET breed=($1), "preferredStylist"=($2) WHERE id=($3)', [breed, preferredStylist, id]);
     return result.rowCount;     //Returns number of rows affected
 }
 
@@ -27,7 +27,7 @@ async function removeDog(id) {
 }
 
 async function newDog(breed, preferredStylist) {
-    const { rows } = await pool.query("INSERT INTO dog (breed, preferredStylist) VALUES ($1, $2) RETURNING *", [breed, preferredStylist]);
+    const { rows } = await pool.query('INSERT INTO dog (breed, "preferredStylist") VALUES ($1, $2) RETURNING *', [breed, preferredStylist]);
     return rows[0]; // Returns the newly created dog with auto-generated ID
 }
 
@@ -64,7 +64,7 @@ async function getAllStylists() {
 }
 
 async function getStylist(employeeId) {
-    const { rows } = await pool.query("SELECT * FROM stylist WHERE employeeId=($1)", [employeeId]);
+    const { rows } = await pool.query('SELECT * FROM stylist WHERE "employeeId"=($1)', [employeeId]);
     return rows[0];
 }
 
@@ -74,12 +74,12 @@ async function newStylist(name) {
 }
 
 async function editStylist(employeeId, name) {
-    const result = await pool.query("UPDATE stylist SET name=($1) WHERE employeeId=($2)", [name, employeeId]);
+    const result = await pool.query('UPDATE stylist SET name=($1) WHERE "employeeId"=($2)', [name, employeeId]);
     return result.rowCount;
 }
 
 async function removeStylist(employeeId) {
-    const result = await pool.query("DELETE FROM stylist WHERE employeeId=($1)", [employeeId]);
+    const result = await pool.query('DELETE FROM stylist WHERE "employeeId"=($1)', [employeeId]);
     return result.rowCount;
 }
 
