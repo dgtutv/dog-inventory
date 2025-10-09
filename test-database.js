@@ -1,3 +1,6 @@
+// Load environment variables first
+require('dotenv').config();
+
 const {
     // Dog functions
     getAllDogs, getDog, newDog, editDog, removeDog,
@@ -30,8 +33,9 @@ async function testAllTables() {
         const breed = await getBreed(1);
         console.log('✅ Breed with ID 1:', breed ? `${breed.name} - ${breed.description}` : 'Not found');
 
-        // Test newBreed
+        // Test newBreed (find next available ID manually since auto-increment may not be set up)
         console.log('\n➕ Testing newBreed...');
+        const maxBreedId = Math.max(...allBreeds.map(b => b.id)) + 1;
         const newBreedResult = await newBreed('Test Breed', 'A breed created for testing purposes');
         console.log('✅ Created new breed:', `ID ${newBreedResult.id}: ${newBreedResult.name}`);
         const testBreedId = newBreedResult.id;
@@ -49,7 +53,7 @@ async function testAllTables() {
         console.log('\n🔍 Testing getAllStylists...');
         const allStylists = await getAllStylists();
         console.log(`✅ Found ${allStylists.length} stylists`);
-        console.log('Sample stylists:', allStylists.slice(0, 3).map(s => `${s.employeeid}: ${s.name}`));
+        console.log('Sample stylists:', allStylists.slice(0, 3).map(s => `${s.employeeId}: ${s.name}`));
 
         // Test getStylist
         console.log('\n🔍 Testing getStylist...');
@@ -59,8 +63,8 @@ async function testAllTables() {
         // Test newStylist
         console.log('\n➕ Testing newStylist...');
         const newStylistResult = await newStylist('Test Stylist');
-        console.log('✅ Created new stylist:', `ID ${newStylistResult.employeeid}: ${newStylistResult.name}`);
-        const testStylistId = newStylistResult.employeeid;
+        console.log('✅ Created new stylist:', `ID ${newStylistResult.employeeId}: ${newStylistResult.name}`);
+        const testStylistId = newStylistResult.employeeId;
 
         // Test editStylist
         console.log('\n✏️ Testing editStylist...');
@@ -75,17 +79,17 @@ async function testAllTables() {
         console.log('\n🔍 Testing getAllDogs...');
         const allDogs = await getAllDogs();
         console.log(`✅ Found ${allDogs.length} dogs`);
-        console.log('Sample dogs:', allDogs.slice(0, 3).map(d => `ID ${d.id}: Breed ${d.breed}, Stylist ${d.preferredstylist}`));
+        console.log('Sample dogs:', allDogs.slice(0, 3).map(d => `ID ${d.id}: Breed ${d.breed}, Stylist ${d.preferredStylist}`));
 
         // Test getDog
         console.log('\n🔍 Testing getDog...');
         const dog = await getDog(1);
-        console.log('✅ Dog with ID 1:', dog ? `Breed ${dog.breed}, Preferred Stylist ${dog.preferredstylist}` : 'Not found');
+        console.log('✅ Dog with ID 1:', dog ? `Breed ${dog.breed}, Preferred Stylist ${dog.preferredStylist}` : 'Not found');
 
         // Test newDog
         console.log('\n➕ Testing newDog...');
         const newDogResult = await newDog(1, 1); // Use existing breed and stylist IDs
-        console.log('✅ Created new dog:', `ID ${newDogResult.id}: Breed ${newDogResult.breed}, Stylist ${newDogResult.preferredstylist}`);
+        console.log('✅ Created new dog:', `ID ${newDogResult.id}: Breed ${newDogResult.breed}, Stylist ${newDogResult.preferredStylist}`);
         const testDogId = newDogResult.id;
 
         // Test editDog
@@ -178,13 +182,13 @@ async function testAllTables() {
         const dogsByStylists = {};
         const finalDogs = await getAllDogs();
         finalDogs.forEach(dog => {
-            dogsByStylists[dog.preferredstylist] = (dogsByStylists[dog.preferredstylist] || 0) + 1;
+            dogsByStylists[dog.preferredStylist] = (dogsByStylists[dog.preferredStylist] || 0) + 1;
         });
 
         console.log('\n👨‍💼 Dogs per stylist:');
         const finalStylists = await getAllStylists();
         finalStylists.forEach(stylist => {
-            const count = dogsByStylists[stylist.employeeid] || 0;
+            const count = dogsByStylists[stylist.employeeId] || 0;
             console.log(`   ${stylist.name}: ${count} dogs`);
         });
 
