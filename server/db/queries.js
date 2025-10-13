@@ -121,12 +121,12 @@ async function getHaircut(id) {
 }
 
 async function newHaircut(name, description, price, dog, date) {
-    const { rows } = await pool.query("INSERT INTO haircut (name, description, price, dog) VALUES ($1, $2, $3, $4) RETURNING *", [name, description, price, dog, date]);
+    const { rows } = await pool.query("INSERT INTO haircut (name, description, price, dog, date) VALUES ($1, $2, $3, $4, $5) RETURNING *", [name, description, price, dog, date]);
     return rows[0];
 }
 
 async function editHaircut(id, name, description, price, dog) {
-    const result = await pool.query("UPDATE haircut SET name=($1), description=($2), price=($3), dog=($4) WHERE id=($5)", [name, description, price, dog, id, date]);
+    const result = await pool.query("UPDATE haircut SET name=($1), description=($2), price=($3), dog=($4), date=($6) WHERE id=($5)", [name, description, price, dog, id, date]);
     return result.rowCount;
 }
 
