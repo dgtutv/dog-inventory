@@ -19,10 +19,21 @@
     <input type="text" id="name" name="name" required />
     <label for="email">Email: </label>
     <input type="email" name="email" id="email" required />
+    <label for="phone">Phone Number: </label>
+    <input type="text" name="phone" id="phone" required />
+    <label for="dog">Dog: </label>
+    <select name="dogId" id="dog">
+        <% dogs.forEach((dog)=> { %>
+            <option value="<%= dog.id %>">
+                <%=dog.name%>
+            </option>
+            <% }); %>
+    </select>
+    <button type="submit">Submit</button>
 </form>
 <div class="titleRow">
     <h2>Owners</h2>
-    <button onclick="toggleForm">New Owner</button>
+    <button onclick="toggleForm()">New Owner</button>
 </div>
 
 </html>
