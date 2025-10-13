@@ -28,7 +28,8 @@ CREATE TABLE "haircut"(
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" FLOAT(53) NOT NULL,
-    "dog" BIGINT NOT NULL
+    "dog" BIGINT NOT NULL,
+    "date" DATE NOT NULL,
 );
 
 CREATE TABLE "owner"(
@@ -150,48 +151,48 @@ INSERT INTO "owner" ("name", "email", "phone", "dogs") VALUES
 ('Kevin Martinez', 'kevin.martinez@email.com', 5554680357, 19),
 ('Melissa Garcia', 'melissa.garcia@email.com', 5555791468, 20);
 
--- Haircuts (Testing one dog having multiple haircuts)
-INSERT INTO "haircut" ("name", "description", "price", "dog") VALUES
+-- Haircuts (Testing one dog having multiple haircuts with realistic dates)
+INSERT INTO "haircut" ("name", "description", "price", "dog", "date") VALUES
 -- Dog 1 (Sarah's Golden Retriever) has multiple haircuts over time
-('Puppy Introduction Cut', 'Gentle first grooming experience for young dogs.', 45.00, 1),
-('Summer Lion Cut', 'Shorter cut to keep cool in summer heat.', 65.00, 1),
-('Holiday Full Groom', 'Complete grooming with festive bow tie.', 85.00, 1),
-('Maintenance Trim', 'Regular upkeep and nail trim.', 55.00, 1),
+('Puppy Introduction Cut', 'Gentle first grooming experience for young dogs.', 45.00, 1, '2024-01-15'),
+('Summer Lion Cut', 'Shorter cut to keep cool in summer heat.', 65.00, 1, '2024-06-20'),
+('Holiday Full Groom', 'Complete grooming with festive bow tie.', 85.00, 1, '2024-12-18'),
+('Maintenance Trim', 'Regular upkeep and nail trim.', 55.00, 1, '2025-03-10'),
 
 -- Dog 2 (Sarah's second Golden Retriever) has multiple haircuts
-('Breed Standard Cut', 'Traditional Golden Retriever styling.', 70.00, 2),
-('Sanitary Trim', 'Hygienic grooming for sensitive areas.', 40.00, 2),
-('De-shedding Treatment', 'Special treatment to reduce shedding.', 60.00, 2),
+('Breed Standard Cut', 'Traditional Golden Retriever styling.', 70.00, 2, '2024-02-28'),
+('Sanitary Trim', 'Hygienic grooming for sensitive areas.', 40.00, 2, '2024-08-14'),
+('De-shedding Treatment', 'Special treatment to reduce shedding.', 60.00, 2, '2025-01-22'),
 
 -- Dog 4 (James' Poodle) has multiple elaborate cuts
-('Continental Clip', 'Classic poodle show cut with pom-poms.', 120.00, 4),
-('Puppy Clip', 'All-over even length cut.', 75.00, 4),
-('Miami Clip', 'Stylish shorter leg hair with longer body.', 95.00, 4),
-('Teddy Bear Cut', 'Cute rounded face with fluffy body.', 80.00, 4),
+('Continental Clip', 'Classic poodle show cut with pom-poms.', 120.00, 4, '2024-03-05'),
+('Puppy Clip', 'All-over even length cut.', 75.00, 4, '2024-07-12'),
+('Miami Clip', 'Stylish shorter leg hair with longer body.', 95.00, 4, '2024-11-08'),
+('Teddy Bear Cut', 'Cute rounded face with fluffy body.', 80.00, 4, '2025-02-14'),
 
 -- Dog 7 (Emma's Labrador) has multiple haircuts
-('Basic Wash & Brush', 'Simple cleaning and brushing service.', 35.00, 7),
-('Nail Trim & Ear Clean', 'Essential maintenance grooming.', 25.00, 7),
-('Full Service Groom', 'Complete grooming package.', 70.00, 7),
+('Basic Wash & Brush', 'Simple cleaning and brushing service.', 35.00, 7, '2024-04-18'),
+('Nail Trim & Ear Clean', 'Essential maintenance grooming.', 25.00, 7, '2024-09-25'),
+('Full Service Groom', 'Complete grooming package.', 70.00, 7, '2025-01-08'),
 
 -- Various other dogs with single or multiple haircuts
-('Bulldog Face Wrinkle Care', 'Specialized cleaning for facial wrinkles.', 50.00, 6),
-('German Shepherd De-shed', 'Heavy de-shedding for double coat.', 65.00, 10),
-('French Bulldog Bath', 'Gentle bath for sensitive skin.', 45.00, 11),
-('Border Collie Trim', 'Working dog practical cut.', 60.00, 12),
-('Yorkie Topknot Style', 'Traditional Yorkshire Terrier hair styling.', 55.00, 13),
-('Husky Undercoat Rake', 'Specialized tool for thick undercoat.', 70.00, 14),
-('Shih Tzu Face Trim', 'Keeping hair out of eyes.', 40.00, 15),
+('Bulldog Face Wrinkle Care', 'Specialized cleaning for facial wrinkles.', 50.00, 6, '2024-05-30'),
+('German Shepherd De-shed', 'Heavy de-shedding for double coat.', 65.00, 10, '2024-04-22'),
+('French Bulldog Bath', 'Gentle bath for sensitive skin.', 45.00, 11, '2024-06-15'),
+('Border Collie Trim', 'Working dog practical cut.', 60.00, 12, '2024-07-03'),
+('Yorkie Topknot Style', 'Traditional Yorkshire Terrier hair styling.', 55.00, 13, '2024-08-19'),
+('Husky Undercoat Rake', 'Specialized tool for thick undercoat.', 70.00, 14, '2024-03-28'),
+('Shih Tzu Face Trim', 'Keeping hair out of eyes.', 40.00, 15, '2024-09-12'),
 
 -- Additional haircuts for dogs with multiple services
-('Express Groom', 'Quick wash and dry service.', 30.00, 16),
-('Luxury Spa Treatment', 'Premium grooming with aromatherapy.', 100.00, 17),
-('Show Prep Grooming', 'Competition-ready styling.', 150.00, 18),
-('Senior Dog Gentle Care', 'Extra gentle grooming for older dogs.', 65.00, 19),
-('Flea & Tick Treatment', 'Medicated bath and treatment.', 75.00, 20),
+('Express Groom', 'Quick wash and dry service.', 30.00, 16, '2024-10-07'),
+('Luxury Spa Treatment', 'Premium grooming with aromatherapy.', 100.00, 17, '2024-11-23'),
+('Show Prep Grooming', 'Competition-ready styling.', 150.00, 18, '2024-05-16'),
+('Senior Dog Gentle Care', 'Extra gentle grooming for older dogs.', 65.00, 19, '2024-12-04'),
+('Flea & Tick Treatment', 'Medicated bath and treatment.', 75.00, 20, '2024-07-29'),
 
 -- Even more haircuts for dogs that should have multiple services
-('Spring Refresh Cut', 'Seasonal grooming to remove winter coat.', 55.00, 5),
-('Matting Removal', 'Careful removal of tangled fur.', 45.00, 8),
-('Anal Gland Expression', 'Health maintenance service.', 20.00, 9),
-('Teeth Cleaning Add-on', 'Dental hygiene service.', 35.00, 12);
+('Spring Refresh Cut', 'Seasonal grooming to remove winter coat.', 55.00, 5, '2024-04-02'),
+('Matting Removal', 'Careful removal of tangled fur.', 45.00, 8, '2024-10-15'),
+('Anal Gland Expression', 'Health maintenance service.', 20.00, 9, '2024-11-30'),
+('Teeth Cleaning Add-on', 'Dental hygiene service.', 35.00, 12, '2025-02-26');
