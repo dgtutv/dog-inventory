@@ -2,13 +2,7 @@
 <!-- New button creates a form, with title and new button being moved down-->
 <script>
     function toggleForm() {
-        const form = document.querySelector("form");
-        if (form.classList.contains("hidden")) {
-            form.classList.remove("hidden");
-        }
-        else {
-            form.classList.add("hidden");
-        }
+        document.querySelector("form").classList.toggle("hidden");
     }
 </script>
 
@@ -49,6 +43,13 @@
         <p><b>Phone number: </b>
             <%= owners[i].phone %>
         </p>
+        <div class="buttonRow">
+            <form action="/owners" method="POST" style="display:inline">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="ids" value="<%= owners[i].ids %>">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
         <%}%>
 </div>
 

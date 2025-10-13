@@ -65,6 +65,7 @@ app.get("/owners", async (req, res) => {
 
         for (let i = 0; i < owners.length; i++) {
             const ownerName = owners[i].name;
+            const ids = [owners[i].id];
             if (!visited.includes(ownerName)) {
                 visited.push(ownerName);
                 const ownerDogs = [];
@@ -72,9 +73,11 @@ app.get("/owners", async (req, res) => {
                     if (owners[j].name === ownerName) {
                         const dogName = dogs.find(dog => dog.id === owners[j].dog).name;
                         ownerDogs.push(dogName);
+                        ids.push(owners[j].id);
                     }
                 }
                 groupedOwners.push({
+                    ids: ids,
                     name: ownerName,
                     email: owners[i].email,
                     phone: owners[i].phone,
@@ -198,9 +201,11 @@ app.post("/dogs", async (req, res) => {
 
 //Owners page, can edit, delete and post
 app.delete("/owners", async (req, res) => {
-    const { id } = req.query;
+    const { ids } = req.query;
     try {
-        await queries.removeOwner(id);
+        ids.forEach(async (id) => {
+            await queries.removeOwner(id);
+        })
         res.redirect("/owners");
     } catch (error) {
         console.error("Error deleting owner:", error);
