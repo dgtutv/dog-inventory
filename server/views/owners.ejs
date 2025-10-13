@@ -44,8 +44,7 @@
             <%= owners[i].phone %>
         </p>
         <div class="buttonRow">
-            <form action="/owners" method="POST" style="display:inline">
-                <input type="hidden" name="action" value="delete">
+            <form action="/owners?_method=DELETE" method="POST" style="display:inline">
                 <input type="hidden" name="ids" value="<%= owners[i].ids %>">
                 <button type="submit">Delete</button>
             </form>

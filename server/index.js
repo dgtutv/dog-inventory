@@ -16,6 +16,10 @@ app.set("view engine", "ejs");
 
 // parse application/x-www-form-urlencoded (from HTML forms)
 app.use(express.urlencoded({ extended: true }));
+
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+
 // parse application/json
 app.use(express.json());
 
@@ -201,7 +205,7 @@ app.post("/dogs", async (req, res) => {
 
 //Owners page, can edit, delete and post
 app.delete("/owners", async (req, res) => {
-    const { ids } = req.query;
+    const { ids } = req.body;
     try {
         ids.forEach(async (id) => {
             await queries.removeOwner(id);
