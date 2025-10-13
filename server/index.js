@@ -1,9 +1,12 @@
+require('dotenv').config({ path: '.env' });
+
+
 const express = require("express");
 const path = require("node:path");
 const userRoutes = require("./routes/userRoutes");
 const app = express();
 const PORT = 3000;
-const queries = require("../db/queries");
+const queries = require("./db/queries");
 
 // Middleware 
 app.set("views", path.join(__dirname, "views"));
@@ -43,7 +46,7 @@ app.get("/dogs", async (req, res) => {
     try {
         const dogs = await queries.getAllDogs();
         const breeds = await queries.getAllBreeds();
-        res.render("index", { dogs, breeds });
+        res.render("dogs", { dogs, breeds });
     } catch (error) {
         console.error("Error loading dogs:", error);
         res.status(500).send("Error loading data");
@@ -182,7 +185,7 @@ app.delete("/owners", async (req, res) => {
 app.put("/owners", async (req, res) => {        //Webpage does the combination of data
     const { id, name, email, phone, dogId } = req.body;
     try {
-        await queries.editHaircut(id, name, email, phone, dogId);
+        await queries.editOwner(id, name, email, phone, dogId);
         res.redirect("/owners");
     } catch (error) {
         console.error("Error editing owner:", error);

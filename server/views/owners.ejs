@@ -1,0 +1,28 @@
+<!--Flex box with Owners title and new button-->
+<!-- New button creates a form, with title and new button being moved down-->
+<script>
+    function toggleForm() {
+        const form = document.querySelector("form");
+        if (form.classList.contains("hidden")) {
+            form.classList.remove("hidden");
+        }
+        else {
+            form.classList.add("hidden");
+        }
+    }
+</script>
+
+<html>
+
+<form action="/owners" method="POST" class="hidden">
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="name" required />
+    <label for="email">Email: </label>
+    <input type="email" name="email" id="email" required />
+</form>
+<div class="titleRow">
+    <h2>Owners</h2>
+    <button onclick="toggleForm">New Owner</button>
+</div>
+
+</html>
