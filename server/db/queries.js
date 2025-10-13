@@ -94,13 +94,13 @@ async function getOwner(id) {
     return rows[0];
 }
 
-async function newOwner(name, email, phone, dogs) {
-    const { rows } = await pool.query("INSERT INTO owner (name, email, phone, dogs) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, phone, dogs]);
+async function newOwner(name, email, phone, dog) {
+    const { rows } = await pool.query("INSERT INTO owner (name, email, phone, dog) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, phone, dog]);
     return rows[0];
 }
 
-async function editOwner(id, name, email, phone, dogs) {
-    const result = await pool.query("UPDATE owner SET name=($1), email=($2), phone=($3), dogs=($4) WHERE id=($5)", [name, email, phone, dogs, id]);
+async function editOwner(id, name, email, phone, dog) {
+    const result = await pool.query("UPDATE owner SET name=($1), email=($2), phone=($3), dog=($4) WHERE id=($5)", [name, email, phone, dog, id]);
     return result.rowCount;
 }
 

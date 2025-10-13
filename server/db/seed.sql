@@ -38,7 +38,7 @@ CREATE TABLE "owner"(
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phone" BIGINT NOT NULL,
-    "dogs" BIGINT NOT NULL
+    "dog" BIGINT NOT NULL
 );
 
 CREATE TABLE "stylist"(
@@ -70,8 +70,8 @@ ALTER TABLE "dog"
 
 -- If a dog is deleted, delete the owner record that references it (CASCADE)
 ALTER TABLE "owner"
-    ADD CONSTRAINT "owner_dogs_foreign"
-    FOREIGN KEY("dogs") REFERENCES "dog"("id")
+    ADD CONSTRAINT "owner_dog_foreign"
+    FOREIGN KEY("dog") REFERENCES "dog"("id")
     ON DELETE CASCADE;
 
 -- =======================================
@@ -125,7 +125,7 @@ INSERT INTO "dog" ("name", "breed", "preferredStylist") VALUES
 ('Princess', 10, 3);  -- Second Shih Tzu with Sofia
 
 -- Owners (Testing one owner having multiple dogs)
-INSERT INTO "owner" ("name", "email", "phone", "dogs") VALUES
+INSERT INTO "owner" ("name", "email", "phone", "dog") VALUES
 -- Sarah owns multiple dogs (testing one-to-many from owner perspective)
 ('Sarah Mitchell', 'sarah.mitchell@email.com', 5551234567, 1),
 ('Sarah Mitchell', 'sarah.mitchell@email.com', 5551234567, 2),
