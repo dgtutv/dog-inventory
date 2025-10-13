@@ -14,7 +14,55 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Routes
-app.use("/", userRoutes);
+app.get("/", (req, res) => {
+    res.render("index", { haircuts });
+});
+
+app.get("/book", (req, res) => {
+    res.render("new-haircut", { dogs, stylists });  //Will need custom SQL call
+});
+
+app.get("/dogs", (req, res) => {
+    res.render("index", { dogs });
+});
+
+app.get("/owners", (req, res) => {
+    res.render("index", { dogs });
+});
+
+//API request implementation for routes
+app.delete("/", async (req, res) => {
+    const { id } = req.query;
+    try {
+        await queries.removeHaircut(haircutId);
+        res.redirect("/"); // Stay on homepage
+    } catch (error) {
+        console.error("Error deleting haircut:", error);
+        res.status(500).send("Error deleting haircut");
+    }
+});
+
+app.delete("/book", async (req, res) => {
+    const { id } = req.query;
+    try {
+        await queries.removeHaircut(haircutId);
+        res.redirect("/");
+    } catch (error) {
+        console.error("Error deleting haircut:", error);
+        res.status(500).send("Error deleting haircut");
+    }
+});
+
+app.post("/book", async (req, res) => {
+    const { id } = req.query;
+    try {
+        await queries.newHaircut(haircutId);
+        res.redirect("/");
+    } catch (error) {
+        console.error("Error deleting haircut:", error);
+        res.status(500).send("Error deleting haircut");
+    }
+});
 
 app.listen(PORT, (error) => {
     if (error) {
