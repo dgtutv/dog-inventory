@@ -16,8 +16,8 @@ async function getDog(id) {
     return rows[0];     //Only first row, should only be one dog of certain id
 }
 
-async function editDog(id, breed, preferredStylist) {
-    const result = await pool.query('UPDATE dog SET breed=($1), "preferredStylist"=($2) WHERE id=($3)', [breed, preferredStylist, id]);
+async function editDog(id, name, breed, preferredStylist) {
+    const result = await pool.query('UPDATE dog SET name=($1), breed=($2), "preferredStylist"=($3) WHERE id=($4)', [name, breed, preferredStylist, id]);
     return result.rowCount;     //Returns number of rows affected
 }
 
@@ -26,8 +26,8 @@ async function removeDog(id) {
     return result.rowCount;
 }
 
-async function newDog(breed, preferredStylist) {
-    const { rows } = await pool.query('INSERT INTO dog (breed, "preferredStylist") VALUES ($1, $2) RETURNING *', [breed, preferredStylist]);
+async function newDog(name, breed, preferredStylist) {
+    const { rows } = await pool.query('INSERT INTO dog (name, breed, "preferredStylist") VALUES ($1, $2, $3) RETURNING *', [name, breed, preferredStylist]);
     return rows[0]; // Returns the newly created dog with auto-generated ID
 }
 

@@ -79,22 +79,22 @@ async function testAllTables() {
         console.log('\n🔍 Testing getAllDogs...');
         const allDogs = await getAllDogs();
         console.log(`✅ Found ${allDogs.length} dogs`);
-        console.log('Sample dogs:', allDogs.slice(0, 3).map(d => `ID ${d.id}: Breed ${d.breed}, Stylist ${d.preferredStylist}`));
+        console.log('Sample dogs:', allDogs.slice(0, 3).map(d => `ID ${d.id}: ${d.name} - Breed ${d.breed}, Stylist ${d.preferredStylist}`));
 
         // Test getDog
         console.log('\n🔍 Testing getDog...');
         const dog = await getDog(1);
-        console.log('✅ Dog with ID 1:', dog ? `Breed ${dog.breed}, Preferred Stylist ${dog.preferredStylist}` : 'Not found');
+        console.log('✅ Dog with ID 1:', dog ? `${dog.name} - Breed ${dog.breed}, Preferred Stylist ${dog.preferredStylist}` : 'Not found');
 
         // Test newDog
         console.log('\n➕ Testing newDog...');
-        const newDogResult = await newDog(1, 1); // Use existing breed and stylist IDs
-        console.log('✅ Created new dog:', `ID ${newDogResult.id}: Breed ${newDogResult.breed}, Stylist ${newDogResult.preferredStylist}`);
+        const newDogResult = await newDog('Test Dog', 1, 1); // Use existing breed and stylist IDs
+        console.log('✅ Created new dog:', `ID ${newDogResult.id}: ${newDogResult.name} - Breed ${newDogResult.breed}, Stylist ${newDogResult.preferredStylist}`);
         const testDogId = newDogResult.id;
 
         // Test editDog
         console.log('\n✏️ Testing editDog...');
-        const editDogResult = await editDog(testDogId, 2, 2);
+        const editDogResult = await editDog(testDogId, 'Updated Test Dog', 2, 2);
         console.log(`✅ Updated dog: ${editDogResult} row(s) affected`);
 
         console.log('='.repeat(60));
@@ -140,13 +140,13 @@ async function testAllTables() {
 
         // Test newHaircut
         console.log('\n➕ Testing newHaircut...');
-        const newHaircutResult = await newHaircut('Test Cut', 'A test haircut', 50.00, testDogId);
+        const newHaircutResult = await newHaircut('Test Cut', 'A test haircut', 50.00, testDogId, '2025-10-13');
         console.log('✅ Created new haircut:', `ID ${newHaircutResult.id}: ${newHaircutResult.name} - $${newHaircutResult.price}`);
         const testHaircutId = newHaircutResult.id;
 
         // Test editHaircut
         console.log('\n✏️ Testing editHaircut...');
-        const editHaircutResult = await editHaircut(testHaircutId, 'Updated Test Cut', 'Updated test haircut', 75.00, testDogId);
+        const editHaircutResult = await editHaircut(testHaircutId, 'Updated Test Cut', 'Updated test haircut', 75.00, testDogId, '2025-10-15');
         console.log(`✅ Updated haircut: ${editHaircutResult} row(s) affected`);
 
         console.log('\n' + '='.repeat(60));

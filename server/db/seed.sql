@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS "stylist" CASCADE;
 
 CREATE TABLE "dog"(
     "id" BIGSERIAL PRIMARY KEY,
+    "name" TEXT NOT NULL,
     "breed" BIGINT NOT NULL,
     "preferredStylist" BIGINT NULL  -- Allow NULL when stylist is deleted
 );
@@ -29,7 +30,7 @@ CREATE TABLE "haircut"(
     "description" TEXT NOT NULL,
     "price" FLOAT(53) NOT NULL,
     "dog" BIGINT NOT NULL,
-    "date" DATE NOT NULL,
+    "date" DATE NOT NULL
 );
 
 CREATE TABLE "owner"(
@@ -100,28 +101,28 @@ INSERT INTO "breed" ("name", "description") VALUES
 ('Shih Tzu', 'Affectionate, playful, and outgoing toy dogs.');
 
 -- Dogs (Testing many-to-one relationships)
-INSERT INTO "dog" ("breed", "preferredStylist") VALUES
+INSERT INTO "dog" ("name", "breed", "preferredStylist") VALUES
 -- Multiple dogs with same breeds
-(1, 1),   -- Golden Retriever with Isabella
-(1, 2),   -- Another Golden Retriever with Marcus
-(1, 3),   -- Third Golden Retriever with Sofia
-(2, 1),   -- Poodle with Isabella (stylist has multiple dogs)
-(2, 4),   -- Another Poodle with Alexander
-(3, 2),   -- Bulldog with Marcus (stylist has multiple dogs)
-(4, 1),   -- Labrador with Isabella (stylist has multiple dogs)
-(4, 5),   -- Another Labrador with Maya
-(4, 6),   -- Third Labrador with David
-(5, 3),   -- German Shepherd with Sofia (stylist has multiple dogs)
-(6, 4),   -- French Bulldog with Alexander (stylist has multiple dogs)
-(7, 5),   -- Border Collie with Maya (stylist has multiple dogs)
-(8, 6),   -- Yorkshire Terrier with David (stylist has multiple dogs)
-(9, 2),   -- Siberian Husky with Marcus (stylist has multiple dogs)
-(10, 4),  -- Shih Tzu with Alexander (stylist has multiple dogs)
-(1, 5),   -- Fourth Golden Retriever with Maya (breed has multiple dogs)
-(2, 6),   -- Third Poodle with David (breed has multiple dogs)
-(6, 1),   -- Second French Bulldog with Isabella (breed & stylist have multiple)
-(8, 2),   -- Second Yorkshire Terrier with Marcus
-(10, 3);  -- Second Shih Tzu with Sofia
+('Buddy', 1, 1),   -- Golden Retriever with Isabella
+('Charlie', 1, 2),   -- Another Golden Retriever with Marcus
+('Max', 1, 3),   -- Third Golden Retriever with Sofia
+('Bella', 2, 1),   -- Poodle with Isabella (stylist has multiple dogs)
+('Luna', 2, 4),   -- Another Poodle with Alexander
+('Rocky', 3, 2),   -- Bulldog with Marcus (stylist has multiple dogs)
+('Cooper', 4, 1),   -- Labrador with Isabella (stylist has multiple dogs)
+('Daisy', 4, 5),   -- Another Labrador with Maya
+('Milo', 4, 6),   -- Third Labrador with David
+('Zeus', 5, 3),   -- German Shepherd with Sofia (stylist has multiple dogs)
+('Lily', 6, 4),   -- French Bulldog with Alexander (stylist has multiple dogs)
+('Scout', 7, 5),   -- Border Collie with Maya (stylist has multiple dogs)
+('Penny', 8, 6),   -- Yorkshire Terrier with David (stylist has multiple dogs)
+('Storm', 9, 2),   -- Siberian Husky with Marcus (stylist has multiple dogs)
+('Mimi', 10, 4),  -- Shih Tzu with Alexander (stylist has multiple dogs)
+('Goldie', 1, 5),   -- Fourth Golden Retriever with Maya (breed has multiple dogs)
+('Fluffy', 2, 6),   -- Third Poodle with David (breed has multiple dogs)
+('Bruno', 6, 1),   -- Second French Bulldog with Isabella (breed & stylist have multiple)
+('Tiny', 8, 2),   -- Second Yorkshire Terrier with Marcus
+('Princess', 10, 3);  -- Second Shih Tzu with Sofia
 
 -- Owners (Testing one owner having multiple dogs)
 INSERT INTO "owner" ("name", "email", "phone", "dogs") VALUES

@@ -42,7 +42,8 @@ app.get("/book", async (req, res) => {
 app.get("/dogs", async (req, res) => {
     try {
         const dogs = await queries.getAllDogs();
-        res.render("index", { dogs });
+        const breeds = await queries.getAllBreeds();
+        res.render("index", { dogs, breeds });
     } catch (error) {
         console.error("Error loading dogs:", error);
         res.status(500).send("Error loading data");
@@ -60,6 +61,8 @@ app.get("/owners", async (req, res) => {
 });
 
 //API request implementation for routes
+
+//Home
 app.delete("/", async (req, res) => {
     const { id } = req.query;
     try {
@@ -72,7 +75,7 @@ app.delete("/", async (req, res) => {
 });
 
 app.put("/", async (req, res) => {
-    const { id, name, description, price, dogId, date } = req.body; // Changed from req.query
+    const { id, name, description, price, dogId, date } = req.body;
     try {
         await queries.editHaircut(id, name, description, price, dogId, date);
         res.redirect("/"); // Stay on homepage
@@ -82,6 +85,7 @@ app.put("/", async (req, res) => {
     }
 });
 
+//Haircut booking page, with prior bookings below 
 app.delete("/book", async (req, res) => {
     const { id } = req.query;
     try {
@@ -94,7 +98,7 @@ app.delete("/book", async (req, res) => {
 });
 
 app.put("/book", async (req, res) => {
-    const { id, name, description, price, dogId, date } = req.body; // Changed from req.query
+    const { id, name, description, price, dogId, date } = req.body;
     try {
         await queries.editHaircut(id, name, description, price, dogId, date);
         res.redirect("/");
@@ -105,7 +109,7 @@ app.put("/book", async (req, res) => {
 });
 
 app.post("/book", async (req, res) => {
-    const { name, description, price, dogId, date } = req.body; // Changed from req.query
+    const { name, description, price, dogId, date } = req.body;
     try {
         await queries.newHaircut(name, description, price, dogId, date);
         res.redirect("/");
@@ -114,6 +118,65 @@ app.post("/book", async (req, res) => {
         res.status(500).send("Error creating haircut");
     }
 });
+
+//Edit dogs page, has ability to edit and delete breeds too
+app.delete("/dogs", async (req, res) => {
+    const { id, type } = req.query;
+    try {
+        if (type === 'breed') {
+            await queries.removeBreed(id);
+        } else {
+            await queries.removeDog(id);
+        }
+        res.redirect("/dogs");
+    } catch (error) {
+        console.error("Error deleting:", error);
+        res.status(500).send("Error deleting");
+    }
+});
+
+
+app.put("/dogs", async (req, res) => {
+    const { id, type, name, breed, preferredStylist, breedName, description } = req.body;
+    try {
+        if (type === 'breed') {
+            await queries.editBreed(id, breedName, description);
+        } else {
+            await queries.editDog(id, name, breed, preferredStylist);
+        }
+        res.redirect("/dogs");
+    } catch (error) {
+        console.error("Error editing:", error);
+        res.status(500).send("Error editing");
+    }
+});
+
+app.post("/dogs", async (req, res) => {
+    const { type, name, breed, preferredStylist, breedName, description } = req.body;
+    try {
+        if (type === 'breed') {
+            await queries.newBreed(breedName, description);
+        } else {
+            await queries.newDog(name, breed, preferredStylist);
+        }
+        res.redirect("/dogs");
+    } catch (error) {
+        console.error("Error creating:", error);
+        res.status(500).send("Error creating");
+    }
+});
+
+app.post("/book", async (req, res) => {
+    const { name, description, price, dogId, date } = req.body;
+    try {
+        await queries.newHaircut(name, description, price, dogId, date);
+        res.redirect("/");
+    } catch (error) {
+        console.error("Error creating haircut:", error);
+        res.status(500).send("Error creating haircut");
+    }
+});
+
 
 app.listen(PORT, (error) => {
     if (error) {
