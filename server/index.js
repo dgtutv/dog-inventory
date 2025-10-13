@@ -52,8 +52,9 @@ app.get("/dogs", async (req, res) => {
 
 app.get("/owners", async (req, res) => {
     try {
+        const owners = await queries.getAllOwners();
         const dogs = await queries.getAllDogs();
-        res.render("index", { dogs });
+        res.render("owners", { owners, dogs });
     } catch (error) {
         console.error("Error loading owners:", error);
         res.status(500).send("Error loading data");
@@ -166,14 +167,37 @@ app.post("/dogs", async (req, res) => {
     }
 });
 
-app.post("/book", async (req, res) => {
-    const { name, description, price, dogId, date } = req.body;
+//Owners page, can edit, delete and post
+app.delete("/owners", async (req, res) => {
+    const { id } = req.query;
     try {
-        await queries.newHaircut(name, description, price, dogId, date);
-        res.redirect("/");
+        await queries.removeOwner(id);
+        res.redirect("/owners");
     } catch (error) {
-        console.error("Error creating haircut:", error);
-        res.status(500).send("Error creating haircut");
+        console.error("Error deleting owner:", error);
+        res.status(500).send("Error deleting owner");
+    }
+});
+
+app.put("/owners", async (req, res) => {        //Webpage does the combination of data
+    const { id, name, email, phone, dogId } = req.body;
+    try {
+        await queries.editHaircut(id, name, email, phone, dogId);
+        res.redirect("/owners");
+    } catch (error) {
+        console.error("Error editing owner:", error);
+        res.status(500).send("Error editing owner");
+    }
+});
+
+app.post("/owners", async (req, res) => {
+    const { name, email, phone, dogId } = req.body;
+    try {
+        await queries.newOwner(name, email, phone, dogId);
+        res.redirect("/owners");
+    } catch (error) {
+        console.error("Error creating owner:", error);
+        res.status(500).send("Error creating owner");
     }
 });
 
