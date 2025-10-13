@@ -205,11 +205,10 @@ app.post("/dogs", async (req, res) => {
 
 //Owners page, can edit, delete and post
 app.delete("/owners", async (req, res) => {
-    const { ids } = req.body;
+    let { ids } = req.body;
+    ids = ids.split(",").map(x => x.trim());
     try {
-        ids.forEach(async (id) => {
-            await queries.removeOwner(id);
-        })
+        await Promise.all(ids.map(id => queries.removeOwner(id)));
         res.redirect("/owners");
     } catch (error) {
         console.error("Error deleting owner:", error);
@@ -217,7 +216,7 @@ app.delete("/owners", async (req, res) => {
     }
 });
 
-app.put("/owners", async (req, res) => {        //Webpage does the combination of data
+app.put("/owners", async (req, res) => {
     const { id, name, email, phone, dogId } = req.body;
     try {
         await queries.editOwner(id, name, email, phone, dogId);
