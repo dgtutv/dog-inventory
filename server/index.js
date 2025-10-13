@@ -8,6 +8,8 @@ const app = express();
 const PORT = 3000;
 const queries = require("./db/queries");
 
+
+
 // Middleware 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -57,7 +59,31 @@ app.get("/owners", async (req, res) => {
     try {
         const owners = await queries.getAllOwners();
         const dogs = await queries.getAllDogs();
-        res.render("owners", { owners, dogs });
+
+        const groupedOwners = [];
+        const visited = [];
+
+        for (let i = 0; i < owners.length; i++) {
+            const ownerName = owners[i].name;
+            if (!visited.includes(ownerName)) {
+                visited.push(ownerName);
+                const ownerDogs = [];
+                for (let j = 0; j < owners.length; j++) {
+                    if (owners[j].name === ownerName) {
+                        const dogName = dogs.find(dog => dog.id === owners[j].dog).name;
+                        ownerDogs.push(dogName);
+                    }
+                }
+                groupedOwners.push({
+                    name: ownerName,
+                    email: owners[i].email,
+                    phone: owners[i].phone,
+                    dogs: ownerDogs
+                });
+            }
+        }
+
+        res.render("owners", { owners: groupedOwners, dogs });
     } catch (error) {
         console.error("Error loading owners:", error);
         res.status(500).send("Error loading data");

@@ -15,6 +15,7 @@
 <html>
 
 <form action="/owners" method="POST" class="hidden">
+    <h2>New Owner: </h2>
     <label for="name">Name: </label>
     <input type="text" id="name" name="name" required />
     <label for="email">Email: </label>
@@ -34,6 +35,21 @@
 <div class="titleRow">
     <h2>Owners</h2>
     <button onclick="toggleForm()">New Owner</button>
+</div>
+<div class="ownersList">
+    <% for(let i=0; i<owners.length; i++){ %>
+        <h2>Name: <%= owners[i].name %>
+        </h2>
+        <p><b>Dogs: </b>
+            <%= owners[i].dogs%>
+        </p>
+        <p><b>Email: </b>
+            <%= owners[i].email %>
+        </p>
+        <p><b>Phone number: </b>
+            <%= owners[i].phone %>
+        </p>
+        <%}%>
 </div>
 
 </html>
