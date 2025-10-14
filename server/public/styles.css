@@ -1,0 +1,25 @@
+/* Simple styles for dog inventory app */
+
+.hidden {
+    display: none;
+}
+
+.titleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.ownersList {
+    margin-top: 20px;
+}
+
+.owner-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: clamp(227px, 475px, 593px);
+}
