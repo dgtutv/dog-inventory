@@ -77,16 +77,18 @@ app.get("/owners", async (req, res) => {
                 for (let j = 0; j < owners.length; j++) {
                     if (owners[j].name === ownerName) {
                         const dogName = dogs.find(dog => dog.id === owners[j].dog).name;
+                        const dogID = dogs.find(dog => dog.id === owners[j].dog).id;
                         ownerDogs.push(dogName);
                         ids.push(owners[j].id);
                     }
                 }
                 groupedOwners.push({
-                    ids: ids,
+                    ids: owners[i].id,
                     name: ownerName,
                     email: owners[i].email,
                     phone: owners[i].phone,
-                    dogs: ownerDogs
+                    dogs: ownerDogs,
+                    dogIDs: dogIDs
                 });
             }
         }
@@ -218,9 +220,13 @@ app.delete("/owners", async (req, res) => {
 });
 
 app.put("/owners", async (req, res) => {
-    const { id, name, email, phone, dogId } = req.body;
+    let { ids, name, email, phone, dogs } = req.body;
+    ids = ids.split(",").map(x => x.trim());
+    dogs = dogs.split(",").map(x => x.trim());
     try {
-        await queries.editOwner(id, name, email, phone, dogId);
+        for (let i = 0; i < ids.length; i++) {
+            await queries.editOwner(ids[i], name, email, phone, dogs[i]);
+        }
         res.redirect("/owners");
     } catch (error) {
         console.error("Error editing owner:", error);

@@ -5,8 +5,8 @@
         document.querySelector("#newOwnerForm").classList.toggle("hidden");
     }
 
-    function toggleEdit() {
-        document.querySelector("#editForm").classList.toggle("hidden");
+    function toggleEdit(id) {
+        document.querySelector(`#editForm${id}`).classList.toggle("hidden");
     }
 </script>
 
@@ -60,24 +60,17 @@
                         <input type="hidden" name="ids" value="<%= owners[i].ids %>">
                         <button type="submit">Delete</button>
                     </form>
-                    <button onclick="toggleEdit()">Edit</button>
+                    <button onclick="toggleEdit(<%= i %>)">Edit</button>
                     <!--Edit owner form, add dog fields and remove as please with dropdown, email and name options to change too-->
-                    <form action="/owners?_mehtod=PUT" method="POST" class="hidden" id="editForm">
+                    <form action="/owners?_mehtod=PUT" method="POST" class="hidden" id="editForm<%=i%>">
                         <h2>Edit Owner: </h2>
+                        <input type="hidden" name="ids" value="<%= owners[i].ids %>">
                         <label for="name">Name: </label>
                         <input type="text" id="name" name="name" required value="<%= owners[i].name %>" />
                         <label for="email">Email: </label>
                         <input type="email" name="email" id="email" required value="<%= owners[i].email %>" />
                         <label for="phone">Phone Number: </label>
                         <input type="text" name="phone" id="phone" required value="<%= owners[i].phone %>" />
-                        <label for="dog">Dog: </label>
-                        <select name="dogId" id="dog">
-                            <% dogs.forEach((dog)=> { %>
-                                <option value="<%= dog.id %>">
-                                    <%=dog.name%>
-                                </option>
-                                <% }); %>
-                        </select>
                         <button type="submit">Submit</button>
                     </form>
                 </div>
