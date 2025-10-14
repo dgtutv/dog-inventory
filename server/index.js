@@ -77,7 +77,6 @@ app.get("/owners", async (req, res) => {
                 for (let j = 0; j < owners.length; j++) {
                     if (owners[j].name === ownerName) {
                         const dogName = dogs.find(dog => dog.id === owners[j].dog).name;
-                        const dogID = dogs.find(dog => dog.id === owners[j].dog).id;
                         ownerDogs.push(dogName);
                         ids.push(owners[j].id);
                     }
@@ -87,8 +86,7 @@ app.get("/owners", async (req, res) => {
                     name: ownerName,
                     email: owners[i].email,
                     phone: owners[i].phone,
-                    dogs: ownerDogs,
-                    dogIDs: dogIDs
+                    dogs: ownerDogs
                 });
             }
         }

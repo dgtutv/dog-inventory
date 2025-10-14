@@ -62,7 +62,7 @@
                     </form>
                     <button onclick="toggleEdit(<%= i %>)">Edit</button>
                     <!--Edit owner form, add dog fields and remove as please with dropdown, email and name options to change too-->
-                    <form action="/owners?_mehtod=PUT" method="POST" class="hidden" id="editForm<%=i%>">
+                    <form action="/owners?_method=PUT" method="POST" class="hidden" id="editForm<%=i%>">
                         <h2>Edit Owner: </h2>
                         <input type="hidden" name="ids" value="<%= owners[i].ids %>">
                         <label for="name">Name: </label>
