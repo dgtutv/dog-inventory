@@ -13,6 +13,7 @@ const queries = require("./db/queries");
 // Middleware 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, 'public')));
 
 // parse application/x-www-form-urlencoded (from HTML forms)
 app.use(express.urlencoded({ extended: true }));

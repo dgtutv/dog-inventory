@@ -2,54 +2,89 @@
 <!-- New button creates a form, with title and new button being moved down-->
 <script>
     function toggleForm() {
-        document.querySelector("form").classList.toggle("hidden");
+        document.querySelector("#newOwnerForm").classList.toggle("hidden");
+    }
+
+    function toggleEdit() {
+        document.querySelector("#editForm").classList.toggle("hidden");
     }
 </script>
 
 <html>
 
-<form action="/owners" method="POST" class="hidden">
-    <h2>New Owner: </h2>
-    <label for="name">Name: </label>
-    <input type="text" id="name" name="name" required />
-    <label for="email">Email: </label>
-    <input type="email" name="email" id="email" required />
-    <label for="phone">Phone Number: </label>
-    <input type="text" name="phone" id="phone" required />
-    <label for="dog">Dog: </label>
-    <select name="dogId" id="dog">
-        <% dogs.forEach((dog)=> { %>
-            <option value="<%= dog.id %>">
-                <%=dog.name%>
-            </option>
-            <% }); %>
-    </select>
-    <button type="submit">Submit</button>
-</form>
-<div class="titleRow">
-    <h2>Owners</h2>
-    <button onclick="toggleForm()">New Owner</button>
-</div>
-<div class="ownersList">
-    <% for(let i=0; i<owners.length; i++){ %>
-        <h2>Name: <%= owners[i].name %>
-        </h2>
-        <p><b>Dogs: </b>
-            <%= owners[i].dogs%>
-        </p>
-        <p><b>Email: </b>
-            <%= owners[i].email %>
-        </p>
-        <p><b>Phone number: </b>
-            <%= owners[i].phone %>
-        </p>
-        <div class="buttonRow">
-            <form action="/owners?_method=DELETE" method="POST" style="display:inline">
-                <input type="hidden" name="ids" value="<%= owners[i].ids %>">
-                <button type="submit">Delete</button>
-            </form>
-        </div>
-        <%}%>
-</div>
+<head>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Dog Inventory - Owners</title>
+</head>
+
+<body>
+
+    <form action="/owners" method="POST" class="hidden" id="newOwnerForm">
+        <h2>New Owner: </h2>
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name" required />
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" required />
+        <label for="phone">Phone Number: </label>
+        <input type="text" name="phone" id="phone" required />
+        <label for="dog">Dog: </label>
+        <select name="dogId" id="dog">
+            <% dogs.forEach((dog)=> { %>
+                <option value="<%= dog.id %>">
+                    <%=dog.name%>
+                </option>
+                <% }); %>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <div class="titleRow">
+        <h2>Owners</h2>
+        <button onclick="toggleForm()">New Owner</button>
+    </div>
+    <div class="ownersList">
+        <% for(let i=0; i<owners.length; i++){ %>
+            <div class="owner-card">
+                <h2>Name: <%= owners[i].name %>
+                </h2>
+                <p><b>Dogs: </b>
+                    <%= owners[i].dogs%>
+                </p>
+                <p><b>Email: </b>
+                    <%= owners[i].email %>
+                </p>
+                <p><b>Phone number: </b>
+                    <%= owners[i].phone %>
+                </p>
+                <div class="buttonRow">
+                    <form action="/owners?_method=DELETE" method="POST" style="display:inline">
+                        <input type="hidden" name="ids" value="<%= owners[i].ids %>">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <button onclick="toggleEdit()">Edit</button>
+                    <!--Edit owner form, add dog fields and remove as please with dropdown, email and name options to change too-->
+                    <form action="/owners?_mehtod=PUT" method="POST" class="hidden" id="editForm">
+                        <h2>Edit Owner: </h2>
+                        <label for="name">Name: </label>
+                        <input type="text" id="name" name="name" required value="<%= owners[i].name %>" />
+                        <label for="email">Email: </label>
+                        <input type="email" name="email" id="email" required value="<%= owners[i].email %>" />
+                        <label for="phone">Phone Number: </label>
+                        <input type="text" name="phone" id="phone" required value="<%= owners[i].phone %>" />
+                        <label for="dog">Dog: </label>
+                        <select name="dogId" id="dog">
+                            <% dogs.forEach((dog)=> { %>
+                                <option value="<%= dog.id %>">
+                                    <%=dog.name%>
+                                </option>
+                                <% }); %>
+                        </select>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <%}%>
+    </div>
+
+</body>
 
 </html>
